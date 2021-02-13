@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import Image from '../../../components/Image/Image';
 import './SinglePost.css';
@@ -13,21 +13,24 @@ class SinglePost extends Component {
   };
 
   componentDidMount() {
-    const postId = this.props.match.params.postId;
-    fetch('URL')
-      .then(res => {
-        if (res.status !== 200) {
-          throw new Error('Failed to fetch status');
-        }
-        return res.json();
-      })
-      .then(resData => {
-        this.setState({
-          title: resData.post.title,
-          author: resData.post.creator.name,
-          date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
-          content: resData.post.content
-        });
+      const postId = this.props.match.params.postId;
+      console.log(postId);
+      fetch('http://localhost:4000/feed/post/' + postId)
+          .then(res => {
+
+              if (res.status !== 200) {
+                  throw new Error('Failed to fetch status');
+              }
+              return res.json();
+          })
+          .then(resData => {
+              this.setState({
+                  title: resData.post.title,
+                  author: resData.post.creator.name,
+                  image: 'http://localhost:4000/' + resData.post.imageUrl,
+                  date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
+                  content: resData.post.content
+              });
       })
       .catch(err => {
         console.log(err);
