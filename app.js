@@ -18,7 +18,7 @@ const store = new MongoDBStore({
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '/images/'));
+        cb(null, path.join('public'));
     },
     filename: (req, file, cb) => {
         const now = new Date().toISOString();
@@ -46,6 +46,10 @@ const feedRoutes = require('./routes/feed');
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json());
+app.use(
+    multer({storage: fileStorage})
+        .single('image')
+);
 // console.log(express.static(path.join(__dirname, 'public','images')));
 // app.use('/static', express.static( 'images'));
 
