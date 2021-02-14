@@ -24,10 +24,11 @@ class SinglePost extends Component {
               return res.json();
           })
           .then(resData => {
+
               this.setState({
                   title: resData.post.title,
                   author: resData.post.creator.name,
-                  image: 'http://localhost:4000/' + resData.post.imageUrl,
+                  image: 'http://localhost:4000/' + resData.post.imageUrl.toString().slice(7),
                   date: new Date(resData.post.createdAt).toLocaleDateString('en-US'),
                   content: resData.post.content
               });
