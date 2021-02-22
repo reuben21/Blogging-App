@@ -4,14 +4,21 @@ const feedController = require('../controllers/feed')
 
 const router = express.Router();
 
-router.get('/posts',feedController.getPost)
+router.get('/posts', feedController.getPost)
 
-router.post('/post',[
-    body('title').trim().isLength({min:5}),
-    body('content').trim().isLength({min:5}),
+router.post('/post', [
+    body('title').trim().isLength({min: 5}),
+    body('content').trim().isLength({min: 5}),
 
-],feedController.createPost)
+], feedController.createPost)
 
-router.get('/post/:postId',feedController.getSinglePost )
+router.get('/post/:postId', feedController.getSinglePost)
+
+
+router.put('/post/:postId', [
+    body('title').trim().isLength({min: 5}),
+    body('content').trim().isLength({min: 5}),
+
+], feedController.updatePost)
 
 module.exports = router;
