@@ -4,7 +4,16 @@ const fs = require('fs');
 const path = require('path');
 
 exports.getPost = (req, res, next) => {
-    Post.find().then(posts => {
+    const currentPage = req.query.page || 1
+    const perPage = 2;
+    let totalItems;
+    Post.find().countDocuments()
+        .then(count => {
+            totalItems = count
+            return Post.find()
+                .skip((currentPage - 1) * perPage)
+                .limit(perPage);
+        }).then(posts => {
         if (!posts) {
             const error = new Error('Could Not Find The Posts');
             error.statusCode = 404;
@@ -12,7 +21,8 @@ exports.getPost = (req, res, next) => {
         }
         res.status(200).json({
             message: "Fetched All Posts Successfully",
-            posts: posts
+            posts: posts,
+            totalItems: totalItems
         });
     }).catch(err => {
         if (!err.statusCode) {
@@ -20,6 +30,8 @@ exports.getPost = (req, res, next) => {
         }
         next(err);
     });
+    ;
+
 
 };
 
@@ -157,7 +169,7 @@ exports.deletePost = (req, res, next) => {
 
     }).then(result => {
         console.log(result);
-        res.statusCode(200).json({message: 'Deleted Post.'})
+        res.status(200).json({message: 'Deleted Post.'})
     }).catch(err => {
         if (!err.statusCode) {
             err.statusCode = 500;
