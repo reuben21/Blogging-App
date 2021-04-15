@@ -3,15 +3,17 @@ const Post = require('../models/post');
 const fs = require('fs');
 const path = require('path');
 const User = require('../models/user');
+const io = require('../socket');
 
 exports.getPost = (req, res, next) => {
     const currentPage = req.query.page || 1
-    const perPage = 2;
+    const perPage = 5;
     let totalItems;
     Post.find().countDocuments()
         .then(count => {
             totalItems = count
-            return Post.find()
+            return Post.find().populate('creator')
+                .sort({createdAt:-1})
                 .skip((currentPage - 1) * perPage)
                 .limit(perPage);
         }).then(posts => {
@@ -20,6 +22,7 @@ exports.getPost = (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
+
         res.status(200).json({
             message: "Fetched All Posts Successfully",
             posts: posts,
@@ -70,9 +73,14 @@ exports.createPost = (req, res, next) => {
             return user.save();
         })
         .then(result => {
+
+            io.getIO().emit('posts',{
+                action: 'create',
+                post:{...post._doc,creator:{_id :req.userId,name:result.name}},
+            })
             res.status(201).json({
                 message: 'Post created successfully!',
-                post: post,
+                post: {...post._doc,creator:{_id :req.userId,name:result.name}},
                 creator: { _id: creator._id, name: creator.name }
             });
         })
@@ -119,7 +127,7 @@ exports.updatePost = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
     let imageUrl = req.body.image;
-    console.log("WHAT IMAGE URL", imageUrl)
+    // console.log("WHAT IMAGE URL", imageUrl)
     if (req.file) {
         imageUrl = req.file.path;
     }
@@ -130,13 +138,13 @@ exports.updatePost = (req, res, next) => {
 
 
     }
-    Post.findById(post_id).then(post => {
+    Post.findById(post_id).populate('creator').then(post => {
         if (!post) {
             const error = new Error('Could Not Find The Post');
             error.statusCode = 404;
             throw error;
         }
-        if (post.creator.toString() !== req.userId) {
+        if (post.creator._id.toString() !== req.userId) {
             const error = new Error('Not authorized!');
             error.statusCode = 403;
             throw error;
@@ -151,6 +159,11 @@ exports.updatePost = (req, res, next) => {
 
 
     }).then(result => {
+
+        io.getIO().emit('posts',{
+            action: 'update',
+            post:result,
+        })
         res.status(200).json({
             message: 'Post Updated',
             post: result
@@ -192,6 +205,10 @@ exports.deletePost = (req, res, next) => {
     })
     .then(result => {
         console.log(result);
+        io.getIO().emit('posts',{
+            action: 'delete',
+            post:post_id},
+        );
         res.status(200).json({message: 'Deleted Post.'})
     }).catch(err => {
         if (!err.statusCode) {
