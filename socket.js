@@ -4,7 +4,7 @@ module.exports = {
     init:httpServer=>{
         io = require('socket.io')(httpServer, {
             cors: {
-                origin: "https://blogging-app-by-reuben.netlify.app/",
+                origin: "*",
                 methods: ["GET", "POST"]
             }
         })
