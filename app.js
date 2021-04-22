@@ -8,6 +8,10 @@ const multer = require('multer');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const { graphqlHTTP  } = require('express-graphql');
+const graphqlSchema = require('./graphql/schema');
+const graphqlResolver = require('./graphql/resolvers');
+
 const MONGO_DB_URI = process.env.MONGO_DB_CONNECTION_URL
 
 const store = new MongoDBStore({
@@ -41,8 +45,6 @@ const fileFilter = (req, file, cb) => {
 };
 
 
-
-
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json());
@@ -64,6 +66,12 @@ app.use((req, res, next) => {
     next();
 });
 
+
+app.use('/graphql', graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolver
+}))
+
 app.use((error, req, res, next) => {
     console.log(error);
     const status = error.statusCode || 500;
@@ -74,8 +82,8 @@ app.use((error, req, res, next) => {
 
 mongoose.connect(MONGO_DB_URI)
     .then(res => {
-        const server = app.listen(process.env.PORT || 5000);
 
+        app.listen(8080)
 
     }).catch(err => {
     console.log(err);
