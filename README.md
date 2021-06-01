@@ -20,10 +20,12 @@ The Frontend made in React JS was made by my course instructor.
 </ul>
 <ol>
 <li>Creating A Post</li>
-<video src="https://user-images.githubusercontent.com/49688611/120318069-02895080-c2fd-11eb-9217-794403ac164f.mp4"/>
+<video src="https://firebasestorage.googleapis.com/v0/b/projects-in-node-js.appspot.com/o/Blogging%20Rest%20Framework%2FCreating%20a%20Post.mp4?alt=media&token=e9bdf5fc-d068-4c5a-a574-99496a84f8b6" />
 <li>Updating A Post</li>
-<video src="https://user-images.githubusercontent.com/49688611/120318119-16cd4d80-c2fd-11eb-940d-57acb0044dd9.mp4"/>
+ 
+  <video src="" />
+  
 <li>Deleting A Post</li> 
-<video src="https://user-images.githubusercontent.com/49688611/120318098-103ed600-c2fd-11eb-9e43-abbe7e0ae1e0.mp4"/>
+  <video src="https://user-images.githubusercontent.com/49688611/120318098-103ed600-c2fd-11eb-9e43-abbe7e0ae1e0.mp4"/>
 </ol>
 
