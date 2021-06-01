@@ -20,7 +20,10 @@ The Frontend made in React JS was made by my course instructor.
 </ul>
 <ol>
 <li>Creating A Post</li>
+<video src="https://user-images.githubusercontent.com/49688611/120318069-02895080-c2fd-11eb-9217-794403ac164f.mp4"/>
 <li>Updating A Post</li>
-<li>Deleting A Post</li>       
+<video src="https://user-images.githubusercontent.com/49688611/120318119-16cd4d80-c2fd-11eb-940d-57acb0044dd9.mp4"/>
+<li>Deleting A Post</li> 
+<video src="https://user-images.githubusercontent.com/49688611/120318098-103ed600-c2fd-11eb-9e43-abbe7e0ae1e0.mp4"/>
 </ol>
-        
+
