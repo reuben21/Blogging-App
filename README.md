@@ -1,4 +1,4 @@
-<h1>Bloggin Rest Framework in Node JS</h1>
+<h1 style="color: #F82B4E;">Bloggin Rest Framework in Node JS</h1>
 <br>
 <ol>
 <li> 
