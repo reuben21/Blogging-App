@@ -1,3 +1,4 @@
+<div>
 <h1 style="color: #F82B4E;">Bloggin Rest Framework in Node JS</h1>
 <br>
 <ol>
@@ -27,4 +28,4 @@ The Frontend made in React JS was made by my course instructor.
 <h2>Deleting A Post
 <video src="https://user-images.githubusercontent.com/49688611/120318098-103ed600-c2fd-11eb-9e43-abbe7e0ae1e0.mp4" width="320" height="240" controls/>
 </h2>
-
+</div>
