@@ -1,5 +1,9 @@
 <div style="color:offwhite;">
 <h1 style="color: #F82B4E !important;">Bloggin Rest Framework in Node JS</h1>
+
+A Blogging App made using React.js for frontend and backend for Node.js.
+
+
 <br>
 <ol>
 <li> 
